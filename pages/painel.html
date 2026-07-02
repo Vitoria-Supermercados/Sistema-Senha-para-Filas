@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel - Vitoria Supermercado</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/painel.css">
+  </head>
+  <body data-page="painel">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">VITORIA SUPERMERCADO</p>
+        <h1 class="brand-message">NÃO VENDEMOS APENAS PRODUTOS; ENTREGAMOS CONFIANÇA, MENOR PREÇO E QUALIDADE.</h1>
+      </div>
+      <div class="topbar-actions">
+        <nav class="page-nav" aria-label="Páginas do sistema">
+          <a class="nav-link" href="totem.html">Totem</a>
+          <a class="nav-link" href="atendimento.html">Atendimento</a>
+          <a class="nav-link active" href="painel.html">Painel</a>
+        </nav>
+        <div class="clock" id="clock">--:--</div>
+      </div>
+    </header>
+    <main>
+      <section class="view active" id="view-painel">
+        <div class="panel-screen">
+          <div class="panel-main">
+            <img class="panel-logo" src="../assets/logo-vitoria-super.png" alt="Vitoria Supermercados">
+            <span>Senha chamada</span>
+            <strong id="panel-ticket">--</strong>
+            <p id="panel-sector">Aguardando chamada</p>
+            <b id="panel-counter">--</b>
+          </div>
+          <div class="panel-history">
+            <h3>Ultimas chamadas</h3>
+            <div id="history-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="../js/app.js"></script>
+    <script src="../js/painel.js"></script>
+  </body>
+</html>

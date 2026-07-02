@@ -1,0 +1,48 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Totem - Vitoria Supermercado</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/totem.css">
+  </head>
+  <body data-page="totem">
+    <main class="totem-container">
+      <header class="totem-header-red">
+        <p>VITÓRIA SUPERMERCADOS</p>
+        <h1>Retire sua senha</h1>
+      </header>
+
+      <section class="view active" id="view-totem">
+        <div class="totem-content">
+          <section class="service-panel">
+            <div class="service-grid" id="service-grid-common"></div>
+          </section>
+
+          <section class="service-panel priority-section">
+            <div class="service-grid" id="service-grid-priority"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-confirmation" aria-live="polite">
+        <div class="confirmation-card">
+          <div class="confirmation-icon">✓</div>
+          <p class="confirmation-status">SENHA EMITIDA COM SUCESSO</p>
+          <strong id="confirmation-ticket">--</strong>
+          <span id="confirmation-sector">Setor</span>
+          <p class="confirmation-help">Aguarde ser chamado no balcão</p>
+          <button class="confirmation-button" id="new-ticket">Nova senha</button>
+        </div>
+      </section>
+
+      <footer class="totem-footer">
+        <span>#</span> Toque em um setor para retirar sua senha
+      </footer>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/totem.js"></script>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+﻿/* Bloco: layout principal do totem */
+.totem-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.totem-header-red {
+  padding: 16px 20px;
+  background: var(--danger);
+  color: #fff;
+  text-align: center;
+}
+
+.totem-header-red p {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  opacity: 0.9;
+}
+
+.totem-header-red h1 {
+  margin: 8px 0 0;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.totem-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+}
+
+.service-panel {
+  width: 100%;
+}
+
+.priority-section {
+  margin-top: 8px;
+}
+
+/* Bloco: estilo dos botoes de setor */
+.service-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.service-card {
+  display: grid;
+  gap: 12px;
+  align-items: start;
+  width: min(100%, 320px);
+  padding: 24px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  box-shadow: var(--shadow);
+}
+
+.priority-card {
+  border-width: 3px;
+}
+
+/* Bloco: rodape e confirmacao */
+.totem-footer {
+  padding: 14px 20px;
+  background: var(--brand);
+  color: #fff;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.totem-footer span {
+  margin-right: 8px;
+  font-weight: 800;
+}
+
+.confirmation-card {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  max-width: 500px;
+  margin: auto;
+  padding: 48px 24px;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+#view-confirmation {
+  padding: 20px;
+}
+
+.confirmation-icon {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 3px solid var(--brand);
+  color: var(--brand);
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.confirmation-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.confirmation-card strong {
+  font-size: clamp(3.5rem, 10vw, 5.8rem);
+  color: var(--brand);
+  line-height: 1;
+}
+
+.confirmation-card span {
+  color: var(--text);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.confirmation-help {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.confirmation-button {
+  width: min(280px, 100%);
+  min-height: 52px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+#view-totem.active {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 0;
+}
+
+#view-confirmation.active {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}

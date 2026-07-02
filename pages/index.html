@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NÃO VENDEMOS APENAS PRODUTOS; ENTREGAMOS CONFIANÇA, MENOR PREÇO E QUALIDADE.</title>
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">VITORIA SUPERMERCADO</p>
+        <h1 class="brand-message">NÃO VENDEMOS APENAS PRODUTOS; ENTREGAMOS CONFIANÇA, MENOR PREÇO E QUALIDADE.</h1>
+      </div>
+      <div class="clock" id="clock">--:--</div>
+    </header>
+    <nav class="tabs" aria-label="Areas do sistema">
+      <button class="tab active" data-view="totem">Totem</button>
+      <button class="tab" data-view="atendimento">Atendimento</button>
+      <button class="tab" data-view="painel">Painel</button>
+    </nav>
+    <main>
+      <section class="view active" id="view-totem">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Entrada do cliente</p>
+            <h2>Emitir nova senha</h2>
+          </div>
+          <button class="ghost" id="print-last">Imprimir ultima</button>
+        </div>
+        <div class="service-grid" id="service-grid"></div>
+        <article class="ticket-preview" aria-live="polite">
+          <span>Ultima senha emitida</span>
+          <strong id="last-ticket">Nenhuma</strong>
+          <small id="last-ticket-detail">Escolha um setor para gerar a senha.</small>
+        </article>
+      </section>
+      <section class="view" id="view-atendimento">
+        <nav class="subtabs" aria-label="Subareas de atendimento">
+          <button class="subtab active" data-subview="operacao">Operação</button>
+          <button class="subtab" data-subview="relatorio">Relatório</button>
+          <button class="subtab" data-subview="config">Config</button>
+        </nav>
+        <section class="subview active" id="subview-operacao">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Operacao</p>
+              <h2>Chamar e concluir atendimento</h2>
+            </div>
+            <button class="danger" id="reset-day">Zerar dia</button>
+          </div>
+          <div class="queue-layout">
+            <aside class="counter-panel">
+              <label for="counter-name">Guiche ou atendente</label>
+              <input id="counter-name" type="text" value="Balcão do açougue" maxlength="28">
+              <label for="sector-filter">Setor</label>
+              <select id="sector-filter"></select>
+              <button class="primary full" id="call-next">Chamar proxima senha</button>
+              <button class="secondary full" id="recall-current">Chamar novamente</button>
+              <button class="success full" id="finish-current">Finalizar atendimento</button>
+              <button class="ghost full" id="skip-current">Pular senha</button>
+            </aside>
+            <div class="current-card">
+              <span>Senha em atendimento</span>
+              <strong id="current-ticket">--</strong>
+              <p id="current-detail">Nenhuma senha chamada.</p>
+            </div>
+            <div class="queue-card">
+              <div class="card-title">
+                <h3>Aguardando</h3>
+                <span id="waiting-count">0</span>
+              </div>
+              <div class="ticket-list" id="waiting-list"></div>
+            </div>
+          </div>
+        </section>
+        <section class="subview" id="subview-relatorio">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Resumo do dia</p>
+              <h2>Indicadores</h2>
+            </div>
+            <button class="ghost" id="export-json">Exportar JSON</button>
+          </div>
+          <div class="metrics" id="metrics"></div>
+        </section>
+        <section class="subview" id="subview-config">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Preferencias</p>
+              <h2>Setores e prioridades</h2>
+            </div>
+            <button class="primary" id="save-config">Salvar</button>
+          </div>
+          <div class="config-list" id="config-list"></div>
+        </section>
+      </section>
+      <section class="view" id="view-painel">
+        <div class="panel-screen">
+          <div class="panel-main">
+            <img class="panel-logo" src="../assets/logo-vitoria-super.png" alt="Vitoria Supermercados">
+            <span>Senha chamada</span>
+            <strong id="panel-ticket">--</strong>
+            <p id="panel-sector">Aguardando chamada</p>
+            <b id="panel-counter">--</b>
+          </div>
+          <div class="panel-history">
+            <h3>Ultimas chamadas</h3>
+            <div id="history-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <template id="service-template">
+      <button class="service-card">
+        <span class="service-prefix"></span>
+        <strong class="service-name"></strong>
+        <small class="service-description"></small>
+      </button>
+    </template>
+    <script src="../js/app.js"></script>
+    <script src="../js/index.js"></script>
+  </body>
+</html>

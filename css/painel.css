@@ -1,0 +1,9 @@
+﻿.panel-screen { display: grid; grid-template-columns: minmax(0, 1.4fr) 360px; gap: 18px; min-height: 560px; }
+.panel-main { display: grid; align-content: center; justify-items: center; gap: 10px; padding: 28px 32px 34px; border-radius: 8px; background: #ffffff; border: 1px solid var(--line); color: #fff; text-align: center; }
+.panel-logo { width: min(520px, 88%); max-height: 170px; object-fit: contain; margin-bottom: 12px; }
+.panel-main strong { color: #0f2731; font-size: clamp(5rem, 18vw, 13rem); line-height: 1; }
+.panel-main p { margin: 18px 0 8px; color: var(--text); font-size: clamp(1.6rem, 4vw, 3rem); }
+.panel-main b { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--accent); }
+.panel-history { padding: 20px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
+#history-list { display: grid; gap: 10px; }
+@media (max-width: 920px) { .panel-screen { grid-template-columns: 1fr; } }
