@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel de TV - VITÓRIA SUPERMERCADOS</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/painel-tv.css">
+  </head>
+  <body data-page="painel-tv">
+    <main class="tv-panel">
+      <section class="tv-left">
+        <div class="tv-left-top">
+          <div class="brand logo-brand" aria-label="VITÓRIA SUPERMERCADOS"></div>
+          <div id="clock" class="clock">--:--</div>
+        </div>
+
+        <div class="tv-left-center">
+          <div class="label">SENHA CHAMADA</div>
+          <div class="ticket-number" id="panel-ticket">--</div>
+          <hr class="divider">
+          <div class="sector" id="panel-sector">Aguardando chamada</div>
+          <div class="counter" id="panel-counter">--</div>
+        </div>
+      </section>
+
+      <aside class="tv-right">
+        <header class="tv-right-header">ÚLTIMAS CHAMADAS</header>
+        <div id="history-list" class="history-list">
+          <!-- preenchido por js/painel.js -->
+        </div>
+        <footer class="tv-footer">O Senhor é a nossa força!</footer>
+      </aside>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/painel.js"></script>
+  </body>
+</html>

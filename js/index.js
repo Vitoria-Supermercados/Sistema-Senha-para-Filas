@@ -53,12 +53,17 @@ function renderPanel() {
   const historyList = $("#history-list");
   if (!panelTicket || !panelSector || !panelCounter || !historyList) return;
 
+  const current = getCurrentTicket();
   const last = state.lastCalled ? state.tickets.find((ticket) => ticket.id === state.lastCalled) : null;
-  panelTicket.textContent = last ? ticketLabel(last) : "--";
-  panelSector.textContent = last ? serviceById(last.serviceId).name : "Aguardando chamada";
-  panelCounter.textContent = last ? counterLabel(last.counter) : "--";
+  const displayTicket = current || last;
+  panelTicket.textContent = displayTicket ? ticketLabel(displayTicket) : "--";
+  panelSector.textContent = displayTicket ? serviceById(displayTicket.serviceId).name : "Aguardando chamada";
+  panelCounter.textContent = displayTicket ? counterLabel(displayTicket.counter) : "--";
 
-  const history = state.tickets.filter((ticket) => ticket.calledAt).sort((a, b) => new Date(b.calledAt) - new Date(a.calledAt)).slice(0, 8);
+  const history = state.tickets
+    .filter((ticket) => ticket.calledAt && ticket.id !== (current ? current.id : last ? last.id : null))
+    .sort((a, b) => new Date(b.calledAt) - new Date(a.calledAt))
+    .slice(0, 5);
   historyList.innerHTML = history.length
     ? history.map((ticket) => `<div class="ticket-item"><strong>${ticketLabel(ticket)}</strong><span>${serviceById(ticket.serviceId).name}</span><small>${nowText(ticket.calledAt)}</small></div>`).join("")
     : '<div class="empty">Sem chamadas recentes.</div>';

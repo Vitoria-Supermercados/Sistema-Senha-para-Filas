@@ -31,11 +31,12 @@ function loadState() {
     const parsed = JSON.parse(stored);
     const parsedServices = Array.isArray(parsed.services) ? parsed.services : [];
     const parsedTickets = Array.isArray(parsed.tickets) ? parsed.tickets : [];
+    const services = normalizeServices(parsedServices);
     return normalizeState({
       ...structuredClone(defaultState),
       ...parsed,
-      services: normalizeServices(parsedServices),
-      tickets: normalizeTickets(parsedTickets)
+      services,
+      tickets: normalizeTickets(parsedTickets, services)
     });
   } catch {
     return normalizeState(structuredClone(defaultState));
@@ -54,15 +55,20 @@ function normalizeServices(services) {
   });
 }
 
-function normalizeTickets(tickets) {
-  const validIds = defaultState.services.map((service) => service.id);
+function normalizeTickets(tickets, services = defaultState.services) {
+  const validIds = services.map((service) => service.id);
   return tickets
     .filter((ticket) => validIds.includes(ticket.serviceId))
-    .map((ticket) => ({
-      ...ticket,
-      priority: Boolean(ticket.priority),
-      status: ticket.status || "waiting"
-    }));
+    .map((ticket) => {
+      const service = services.find((item) => item.id === ticket.serviceId);
+      const priority = Boolean(ticket.priority);
+      return {
+        ...ticket,
+        priority,
+        status: ticket.status || "waiting",
+        code: service ? formatTicket(service, ticket.number, priority) : ticket.code
+      };
+    });
 }
 
 function normalizeState(nextState) {
@@ -74,13 +80,32 @@ function normalizeState(nextState) {
   return nextState;
 }
 
+function broadcastStateChange(message) {
+  try {
+    if (typeof BroadcastChannel !== "undefined") {
+      const bc = new BroadcastChannel("fila-mercado");
+      bc.postMessage(message);
+      bc.close();
+    } else if (typeof window !== "undefined") {
+      const key = "fila-mercado-broadcast";
+      localStorage.setItem(key, JSON.stringify({ ...message, ts: Date.now() }));
+      setTimeout(() => localStorage.removeItem(key), 500);
+    }
+  } catch (e) {
+    // ignore
+  }
+}
+
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  broadcastStateChange({ type: "state-changed" });
 }
 
 function formatTicket(service, number, priority = false) {
-  let prefix = service.prefix.toLowerCase();
-  if (priority) prefix += "p";
+  const prefix = service.prefix.toLowerCase();
+  if (priority) {
+    return `PR${prefix.toUpperCase()}${String(number).padStart(3, "0")}`;
+  }
   return `${prefix.toUpperCase()}${String(number).padStart(3, "0")}`;
 }
 
@@ -97,7 +122,7 @@ function ticketLabel(ticket) {
 
 function spokenTicket(ticket) {
   const service = serviceById(ticket.serviceId);
-  const prefix = service?.prefix || ticketLabel(ticket).slice(0, 1);
+  const prefix = ticket.priority ? "pr" : service?.prefix || ticketLabel(ticket).slice(0, 1);
   const spokenPrefix = prefix.split("").join(" ");
   const number = String(ticket.number).padStart(3, "0").split("").join(" ");
   return `${spokenPrefix}, ${number}`;
@@ -142,25 +167,37 @@ function createTicket(serviceId, priority = false) {
   if (priority) service.priorityNextNumber += 1;
   else service.nextNumber += 1;
 
+  const now = new Date().toISOString();
   const ticket = {
     id: createId(),
     serviceId,
     number,
     code: formatTicket(service, number, priority),
-    status: "waiting",
-    createdAt: new Date().toISOString(),
-    calledAt: null,
+    status: "called",
+    createdAt: now,
+    calledAt: now,
     finishedAt: null,
     counter: null,
     priority
   };
 
   state.tickets.push(ticket);
+  state.current = ticket.id;
+  state.lastCalled = ticket.id;
   saveState();
   notifyRefresh();
   showLastTicket(ticket);
   showConfirmation(ticket);
   return ticket;
+}
+
+// Allow other windows to request the latest state reload
+function reloadStateAndNotify() {
+  state = loadState();
+  // update exported reference
+  window.filaApp = window.filaApp || {};
+  window.filaApp.state = state;
+  notifyRefresh();
 }
 
 function callNext() {
@@ -171,15 +208,6 @@ function callNext() {
   if (!next) {
     alert("Nao ha senhas aguardando para este filtro.");
     return;
-  }
-
-  if (state.current) {
-    const currentTicket = state.tickets.find((ticket) => ticket.id === state.current);
-    if (currentTicket && currentTicket.status === "called") {
-      currentTicket.status = "waiting";
-      currentTicket.calledAt = null;
-      currentTicket.counter = null;
-    }
   }
 
   next.status = "called";
